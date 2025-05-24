@@ -1,0 +1,25 @@
+[
+    {
+      "titre": "Le Petit Prince",
+      "auteur": "Antoine de Saint-Exupéry",
+      "date": "1943",
+      "format": "PDF",
+      "langue": "Français"
+    },
+    {
+      "titre": "1984",
+      "auteur": "George Orwell",
+      "date": "1949",
+      "format": "EPUB",
+      "langue": "Anglais"
+    },
+    {
+      "titre": "Les Misérables",
+      "auteur": "Victor Hugo",
+      "date": "1862",
+      "format": "EBOOK",
+      "langue": "Français"
+    }
+    
+  ]
+  
