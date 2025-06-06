@@ -4,21 +4,32 @@
       "auteur": "Antoine de Saint-Exupéry",
       "date": "1943",
       "format": "PDF",
-      "langue": "Français"
+      "langue": "Français",
+      "lecture": "livres/Le petit prince.pdf"
     },
     {
-      "titre": "1984",
-      "auteur": "George Orwell",
+      "titre": "Astérix - Astérix et le Griffon",
+      "auteur": "Astérix",
       "date": "1949",
-      "format": "EPUB",
-      "langue": "Anglais"
+      "format": "pdf",
+      "langue": "Francais",
+      "lecture": "livres/Astérix - Astérix et le Griffon.pdf"
     },
     {
       "titre": "Les Misérables",
       "auteur": "Victor Hugo",
       "date": "1862",
       "format": "EBOOK",
-      "langue": "Français"
+      "langue": "Français",
+      "lecture": "livres/Le petit prince.pdf"
+    },
+    {
+      "titre": "Les Misérables",
+      "auteur": "Victor Hugo",
+      "date": "1862",
+      "format": "EBOOK",
+      "langue": "Français",
+      "lecture": "livres/Le petit prince.pdf"
     }
     
   ]

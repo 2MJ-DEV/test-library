@@ -9,6 +9,7 @@ function creerCarteLivre(livre) {
       <p><strong>Date:</strong> ${livre.date}</p>
       <p><strong>Format:</strong> ${livre.format}</p>
       <p><strong>Langue:</strong> ${livre.langue}</p>
+      <a href="lecteur.html?fichier=${encodeURIComponent(livre.lecture)}" target="_blank"><strong>Lire</strong></a>
     `;
 
     return div;
@@ -26,3 +27,4 @@ fetch("./books.json")
         });
     })
     .catch(error => console.error("Erreur de chargement des livres :", error));
+    

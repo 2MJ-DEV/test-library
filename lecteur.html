@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <title>Lecteur</title>
+    <style>
+        body {
+            margin: 0;
+        }
+    
+        iframe {
+            width: 100vw;
+            height: 100vh;
+            border: none;
+        }
+    </style>
+    </head>
+    
+    <body>
+        <div id="controls">
+            <button id="prev">⬅️ Précédente</button>
+            <button id="next">Suivante ➡️</button>
+            <button id="zoomIn">🔍 Zoom +</button>
+            <button id="zoomOut">🔍 Zoom -</button>
+            <span>Page : <span id="page_num"></span> / <span id="page_count"></span></span>
+        </div>
+        
+        <canvas id="pdf-canvas"></canvas>
+        
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    
+        <script>
+            // Removed duplicate 'fichier' declaration and iframe logic (no iframe with id 'lecteur' in HTML)
+            const urlParams = new URLSearchParams(window.location.search);
+                const fichier = urlParams.get("fichier");
+
+                if (!fichier) {
+                    document.body.innerHTML = "<p>Aucun fichier PDF fourni.</p>";
+                }
+
+                const canvas = document.getElementById('pdf-canvas');
+                const ctx = canvas.getContext('2d');
+
+                let pdfDoc = null;
+                let pageNum = 1;
+                let scale = 1.2; // zoom initial
+                let pageRendering = false;
+
+                function renderPage(num) {
+                    pageRendering = true;
+                    pdfDoc.getPage(num).then(function (page) {
+                        const viewport = page.getViewport({ scale });
+                        canvas.height = viewport.height;
+                        canvas.width = viewport.width;
+
+                        const renderContext = {
+                            canvasContext: ctx,
+                            viewport: viewport
+                        };
+                        page.render(renderContext).promise.then(function () {
+                            pageRendering = false;
+                            document.getElementById('page_num').textContent = pageNum;
+                        });
+                    });
+                }
+
+                function queueRenderPage(num) {
+                    if (pageRendering) return;
+                    renderPage(num);
+                }
+
+                // Navigation
+                document.getElementById('prev').addEventListener('click', () => {
+                    if (pageNum <= 1) return;
+                    pageNum--;
+                    queueRenderPage(pageNum);
+                });
+
+                document.getElementById('next').addEventListener('click', () => {
+                    if (pageNum >= pdfDoc.numPages) return;
+                    pageNum++;
+                    queueRenderPage(pageNum);
+                });
+
+                // Zoom
+                document.getElementById('zoomIn').addEventListener('click', () => {
+                    scale += 0.2;
+                    queueRenderPage(pageNum);
+                });
+
+                document.getElementById('zoomOut').addEventListener('click', () => {
+                    if (scale <= 0.5) return;
+                    scale -= 0.2;
+                    queueRenderPage(pageNum);
+                });
+
+                // Chargement du PDF
+                pdfjsLib.getDocument(fichier).promise.then(function (pdfDoc_) {
+                    pdfDoc = pdfDoc_;
+                    document.getElementById('page_count').textContent = pdfDoc.numPages;
+                    renderPage(pageNum);
+                }).catch(err => {
+                    console.error("Erreur lors du chargement du PDF :", err);
+                    document.body.innerHTML = `<p>Impossible de charger le fichier PDF.</p>`;
+                });
+        </script>
+</body>
+</html>
